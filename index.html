@@ -12,6 +12,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <style>
     :root {
       --emerald-50: #ecfdf5;
@@ -254,6 +255,17 @@ const apps = [
   },
   {
     id: 4,
+    title: "IgG4-RD 難病 重症度 参照マニュアル",
+    url: "https://medical-expense-assistance-for-intr.vercel.app/",
+    description: "難病医療費助成の対象となる重症度判定基準（臓器障害・CKD分類・Child-Pugh分類）を素早く参照できます。",
+    badge: "助成基準",
+    icon: "book-open",
+    color: "#059669",
+    qrSrc: null,
+    qrUrl: "https://medical-expense-assistance-for-intr.vercel.app/",
+  },
+  {
+    id: 5,
     title: "NMOSD 医療費自己負担シミュレーター",
     url: "https://nmosd-expenses.vercel.app",
     description: "視神経脊髄炎（NMOSD）における各種製剤の年間・月間の自己負担額を試算します。",
@@ -263,7 +275,7 @@ const apps = [
     qrSrc: QR4,
   },
   {
-    id: 5,
+    id: 6,
     title: "NMOSD 外来点数シミュレーター",
     url: "https://tanpaku-collab-nmosd-score-calc-fin.vercel.app/",
     description: "軽症高額特例の適用に必要な外来点数を、処方内容や検査項目から算出します。",
@@ -280,6 +292,7 @@ const iconMap = {
   "calculator": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>`,
   "syringe": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>`,
   "file-text": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>`,
+  "book-open": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
   "external-link": `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>`,
 };
 
@@ -292,14 +305,36 @@ function SVGIcon({ name, color }) {
   );
 }
 
-function QRPlaceholder({ src, alt }) {
+function QRCanvas({ url }) {
+  const canvasRef = React.useRef(null);
+  React.useEffect(() => {
+    if (canvasRef.current && typeof QRious !== 'undefined') {
+      new QRious({
+        element: canvasRef.current,
+        value: url,
+        size: 96,
+        backgroundAlpha: 1,
+        foreground: '#0f172a',
+        background: '#f0fdf8',
+        level: 'M',
+      });
+    }
+  }, [url]);
+  return <canvas ref={canvasRef} style={{ width: '96px', height: '96px', borderRadius: '8px', display: 'block' }} />;
+}
+
+function QRPlaceholder({ src, alt, qrUrl }) {
   return (
     <div className="qr-box">
-      <img
-        src={src}
-        alt={alt || "QR Code"}
-        style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '8px', display: 'block' }}
-      />
+      {qrUrl ? (
+        <QRCanvas url={qrUrl} />
+      ) : (
+        <img
+          src={src}
+          alt={alt || "QR Code"}
+          style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '8px', display: 'block' }}
+        />
+      )}
     </div>
   );
 }
@@ -342,7 +377,7 @@ function AppCard({ app, delay }) {
       {/* Bottom: QR left + button right */}
       <div className="flex items-end justify-between gap-3 mt-auto">
         <div style={{ textAlign: 'center' }}>
-          <QRPlaceholder src={app.qrSrc} alt={`${app.title} QR`} />
+          <QRPlaceholder src={app.qrSrc} alt={`${app.title} QR`} qrUrl={app.qrUrl} />
           <div style={{ fontSize: '0.62rem', color: '#a7f3d0', marginTop: '4px', letterSpacing: '0.04em' }}>QR CODE</div>
         </div>
         <a
@@ -421,7 +456,7 @@ function App() {
       </section>
 
       {/* Cards */}
-      <section style={{ maxWidth: '900px', margin: '0 auto', padding: '2.5rem 1.25rem 4rem' }}>
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 1.25rem 4rem' }}>
         <div className="fade-up delay-2" style={{ marginBottom: '1.5rem' }}>
           <span className="section-label">Available Tools</span>
           <div style={{ width: 36, height: 2, background: 'linear-gradient(90deg,#10b981,transparent)', marginTop: 6, borderRadius: 2 }}></div>
@@ -429,7 +464,7 @@ function App() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
           gap: '1.1rem',
         }}>
           {apps.map((app, i) => (
