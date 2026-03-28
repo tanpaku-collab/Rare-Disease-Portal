@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rare Disease Support Tools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -228,63 +229,68 @@ const apps = [
   {
     id: 1,
     title: "IgG4-RD 診断支援",
-    url: "https://ig-g4-rd-diagnosis.vercel.app",
+    url: "https://igg4-rd-humanbodymodel.vercel.app/",
     description: "日本の診断基準（2020年改訂）に基づき、IgG4関連疾患の診断をサポートします。",
     badge: "診断支援",
     icon: "stethoscope",
     color: "#059669",
-    qrSrc: QR1,
+    qrSrc: null,
+    qrUrl: "https://igg4-rd-humanbodymodel.vercel.app/",
   },
   {
     id: 2,
     title: "IgG4-RD 分類基準スコアリング",
-    url: "https://igg4-rd-criteria.vercel.app",
+    url: "https://igg4-rd-classification.vercel.app/",
     description: "ACR/EULAR 2019 分類基準に基づき、ポイント算出と分類判定を自動化します。",
     badge: "スコアリング",
     icon: "clipboard-list",
     color: "#047857",
-    qrSrc: QR2,
+    qrSrc: null,
+    qrUrl: "https://igg4-rd-classification.vercel.app/",
   },
   {
     id: 3,
     title: "IgG4-RD 医療費自己負担シミュレーター",
-    url: "https://g4-cost.vercel.app/",
+    url: "https://ig-g4-cost-burden.vercel.app/",
     description: "指定難病や高額療養費制度を考慮した、ユプリズナ等の年間医療費を算出します。",
     badge: "費用試算",
     icon: "calculator",
     color: "#0d9488",
-    qrSrc: QR3,
+    qrSrc: null,
+    qrUrl: "https://ig-g4-cost-burden.vercel.app/",
   },
   {
     id: 4,
     title: "IgG4-RD 難病 重症度 参照マニュアル",
-    url: "https://medical-expense-assistance-for-intr.vercel.app/",
+    url: "https://g4-severity.vercel.app/",
     description: "難病医療費助成の対象となる重症度判定基準（臓器障害・CKD分類・Child-Pugh分類）を素早く参照できます。",
     badge: "助成基準",
     icon: "book-open",
     color: "#059669",
     qrSrc: null,
-    qrUrl: "https://medical-expense-assistance-for-intr.vercel.app/",
+    qrUrl: "https://g4-severity.vercel.app/",
   },
   {
     id: 5,
     title: "NMOSD 医療費自己負担シミュレーター",
-    url: "https://nmosd-expenses.vercel.app",
+    url: "https://nmosd-cost-burden.vercel.app/",
     description: "視神経脊髄炎（NMOSD）における各種製剤の年間・月間の自己負担額を試算します。",
     badge: "費用試算",
     icon: "syringe",
     color: "#059669",
-    qrSrc: QR4,
+    qrSrc: null,
+    qrUrl: "https://nmosd-cost-burden.vercel.app/",
   },
   {
     id: 6,
     title: "NMOSD 外来点数シミュレーター",
-    url: "https://tanpaku-collab-nmosd-score-calc-fin.vercel.app/",
+    url: "https://nmosd-score-mild-cases.vercel.app/",
     description: "軽症高額特例の適用に必要な外来点数を、処方内容や検査項目から算出します。",
     badge: "点数算出",
     icon: "file-text",
     color: "#059669",
-    qrSrc: QR5,
+    qrSrc: null,
+    qrUrl: "https://nmosd-score-mild-cases.vercel.app/",
   },
 ];
 
